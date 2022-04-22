@@ -16,7 +16,11 @@ class ItemModel(db.Model):
         self.store_id = store_id
 
     def json(self):
-        return {'name': self.name, 'price': self.price}
+        return {'id': id, 
+                'name': self.name,
+                'price': self.price, 
+                'store_id': self.store_id
+                }
 
     def save_to_db(self):
         db.session.add(self)
@@ -47,7 +51,10 @@ class ItemModel(db.Model):
     @classmethod
     def find_by_name(cls,name):
         return cls.query.filter_by(name=name).first() # this is equivalent to SELECT * FROM items WHERE name=name LIMIT 1 (returns first row only)
-        
+    
+    @classmethod
+    def find_all(cls):
+        return cls.query.all()
 
         # code below (utilizes sqlite3) was replaced by code above (uses SQLAlchemy)
         #connection = sqlite3.connect('data.db')
